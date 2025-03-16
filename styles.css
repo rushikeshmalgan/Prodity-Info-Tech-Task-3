@@ -1,0 +1,105 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #1e1e2e;
+    color: white;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Mode Selection Screen */
+#mode-selection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#mode-selection h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+#multiplayer-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+#ai-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* Game Container */
+.hidden {
+    display: none;
+}
+
+#game-container {
+    margin-top: 50px;
+}
+
+#status {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Tic-Tac-Toe Board */
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 10px;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #2d2d3a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.cell:hover {
+    background-color: #44475a;
+}
+
+/* Winning Cells Highlight */
+.win {
+    background-color: #32CD32 !important;
+}
+
+/* Reset Button */
+#reset {
+    background-color: #ff4444;
+    color: white;
+    margin-top: 20px;
+}
+/* Hide game container initially */
+#game-container {
+    display: none;
+}
+
