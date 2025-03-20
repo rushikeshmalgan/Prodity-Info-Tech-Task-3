@@ -2,6 +2,7 @@ const modeSelectionScreen = document.getElementById("mode-selection");
 const gameScreen = document.getElementById("game-container");
 const board = document.querySelectorAll(".cell");
 const resetButton = document.getElementById("reset");
+const backButton = document.getElementById("back");
 const statusText = document.getElementById("status");
 const multiplayerBtn = document.getElementById("multiplayer-btn");
 const aiBtn = document.getElementById("ai-btn");
@@ -19,12 +20,18 @@ const winningCombinations = [
 
 multiplayerBtn.addEventListener("click", () => startGame(true));
 aiBtn.addEventListener("click", () => startGame(false));
+backButton.addEventListener("click", backToModeSelection);
 
 function startGame(multiplayer) {
     isMultiplayer = multiplayer;
-    modeSelectionScreen.style.display = "none"; 
-    gameScreen.style.display = "block";         
+    modeSelectionScreen.style.display = "none";
+    gameScreen.style.display = "block";
     resetGame();
+}
+
+function backToModeSelection() {
+    gameScreen.style.display = "none";
+    modeSelectionScreen.style.display = "flex";
 }
 
 function handleCellClick(index) {
@@ -47,7 +54,7 @@ function checkWinner() {
         let [a, b, c] = combo;
         if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
             isGameActive = false;
-            statusText.textContent = `Player ${currentPlayer} Wins!`;
+            statusText.textContent = `Player ${gameState[a]} Wins!`;
             highlightWinner(combo);
             return true;
         }
@@ -72,13 +79,13 @@ function aiMove() {
     if (!isGameActive) return;
 
     let bestScore = -Infinity;
-    let bestMove;
+    let bestMove = -1;
     
     for (let i = 0; i < gameState.length; i++) {
         if (gameState[i] === "") {
-            gameState[i] = "O";  
+            gameState[i] = "O";
             let score = minimax(gameState, 0, false);
-            gameState[i] = "";  
+            gameState[i] = "";
 
             if (score > bestScore) {
                 bestScore = score;
@@ -87,9 +94,11 @@ function aiMove() {
         }
     }
 
-    gameState[bestMove] = "O";
-    board[bestMove].textContent = "O";
-    checkWinner();
+    if (bestMove !== -1) {
+        gameState[bestMove] = "O";
+        board[bestMove].textContent = "O";
+        checkWinner();
+    }
 }
 
 function minimax(state, depth, isMaximizing) {
@@ -132,7 +141,6 @@ function checkWinnerForAI() {
     return null;
 }
 
-
 function resetGame() {
     gameState = ["", "", "", "", "", "", "", "", ""];
     isGameActive = true;
@@ -143,7 +151,6 @@ function resetGame() {
     });
     statusText.textContent = "Tic-Tac-Toe";
 }
-
 
 board.forEach((cell, index) => {
     cell.addEventListener("click", () => handleCellClick(index));
